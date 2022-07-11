@@ -1,14 +1,15 @@
 import { useState } from 'react';
-
-import { 
-    signInWithGooglePopup, 
-    signInAuthUserWithEmailAndPassword
-} from '../../utils/firebase/firebase.utils';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from '../form-input/form-input.component';
 
 import { SignInContainer, ButtonsContainer} from './sign-in-form.styles';
+import {
+    googleSignInStart,
+    emailSignInStart,
+} from '../../store/user/user.action';
 
 const defaultFormFields = {
     email: '',
@@ -16,37 +17,29 @@ const defaultFormFields = {
 }
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields; 
+  const navigate = useNavigate();
 
-  const SignInWithGoogle = async () => {
-    await signInWithGooglePopup();
+  const SignInWithGoogle = () => {
+    dispatch(googleSignInStart());
  }
  const resetFormFields = () => {
     setFormFields(defaultFormFields);
  };
 
- const handleSubmit = async (e) => {
-     e.preventDefault();
-     try { 
-        const {user} = await signInAuthUserWithEmailAndPassword(
-            email, password
-        );
+ const handleSubmit = async (event) => {
+    event.preventDefault();
 
-        resetFormFields();
-     } catch (error) {
-        switch(error.code) {
-            case 'auth/wrong-password':
-                alert('incorrect password for email');
-                break;
-            case 'auth/user-not-found':
-                alert('no user associated with this email');
-                break;
-            default: 
-                console.log(error)
-        }
-     }
- }
+    try {
+      dispatch(emailSignInStart(email, password));
+      resetFormFields();
+      setTimeout(() => navigate('/'), 500);
+    } catch (error) {
+      console.log('user sign in failed', error);
+    }
+  };
  const handleChange = (event) => {
      const { name, value } = event.target;
      setFormFields({...formFields, [name]: value});
