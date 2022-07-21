@@ -6,7 +6,7 @@ import {
   DirectoryItemContainer,
   BackgroundImage, 
   Body 
-} from './directory-item.styles.jsx';
+} from './directory-item.styles';
 
 type DirectoryItemProps = {
   category: DirectoryCategory;

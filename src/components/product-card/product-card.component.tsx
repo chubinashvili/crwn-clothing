@@ -5,13 +5,12 @@ import { ProductCardContainer, Footer, Name, Price} from'./product-card.styles';
 
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { addItemToCart } from '../../store/cart/cart.action';
+import { CategoryItem } from '../../store/categories/category.types';
 
 import Button, { BUTTON_TYPE_CLASSES} from '../button/button.component';
-import { CategoryItem } from '../../store/categories/category.types';
-import { CartItem } from '../../store/cart/cart.types';
 
 type ProductCardProps = {
-    product: CartItem;
+    product: CategoryItem;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
