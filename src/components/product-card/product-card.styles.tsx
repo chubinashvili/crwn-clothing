@@ -23,14 +23,27 @@ export const ProductCardContainer  = styled.div`
     display: none;
   }
 
-  &:hover {
-    img {
-      opacity: 0.8;
-    }
+    &:hover {
+      img {
+        opacity: 0.8;
+      }
 
-    button {
-      opacity: 0.85;
-      display: flex;
+      button {
+        opacity: 0.85;
+        display: flex;
+      }
+    }
+  
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+    &:hover {
+      img {
+        opacity: unset;
+      }
+  
+      button {
+        opacity: unset;
+      }
     }
   }
 `
